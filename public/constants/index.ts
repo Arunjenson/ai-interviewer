@@ -203,3 +203,36 @@ export const interviewCovers = [
   "/tiktok.png",
   "/yahoo.png",
 ];
+
+export const dummyInterviews = [
+		{
+			id: 1,
+			userId: "user1",
+			role: "React.js Frontend Developer",
+			type: "Technical",
+			techstack: ["React.js", "Node.js", "Express.js"],
+			level: "Mid",
+			questions: [
+				"What is React?",
+				"What is the difference between props and state?",
+				"How do you manage state in React?",
+			],
+			finalized: false,
+			createdAt: "2024-03-15T10:00:00Z",
+		},
+		{
+			id: 2,
+			userId: "user2",
+			role: "Node.js Backend Developer",
+			type: "Technical",
+			techstack: ["Node.js", "Express.js", "MongoDB"],
+			level: "Senior",
+			questions: [
+				"What is Node.js?",
+				"What is Express.js?",
+				"How do you connect to a MongoDB database?",
+			],
+			finalized: false,
+			createdAt: "2024-03-16T10:00:00Z",
+		},
+	]
