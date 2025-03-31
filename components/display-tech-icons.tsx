@@ -3,8 +3,6 @@ import Image from "next/image"
 
 
 const DisplayTechIcons = async({ techstack }: TechIconProps) => {
-  console.log(techstack,"hello")
-
   const techIcons = await getTechLogos(techstack)
   return (
     <div className="flex flex-row">
