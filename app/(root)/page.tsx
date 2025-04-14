@@ -1,12 +1,19 @@
 import InterviewCard from '@/components/interview-card'
 import { Button } from '@/components/ui/button'
-import { dummyInterviews } from '@/public/constants'
-import { Inter } from 'next/font/google'
+import { getCurrentUser, getInterviewsByUserId, getLastestInterviews } from '@/lib/actions/auth.action'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-function page() {
+async function page() {
+  const user = await getCurrentUser();
+  const [userInterviews,lastestInterviews] = await Promise.all([
+    await getInterviewsByUserId(user?.id!),
+    await getLastestInterviews({userId:user?.id!})
+  ])
+  const hasPastInterviews = userInterviews?.length > 0;
+  const hasUpcomingInterviews = lastestInterviews?.length > 0;
   return (
     <>
     <section className='card-cta'>
@@ -22,20 +29,29 @@ function page() {
     <section className="flex flex-col gap-6 mt-8">
       <h2>Your Interviews</h2>
       <div className="interviews-section">
-        {dummyInterviews.map((interview) => (
-          <InterviewCard key={interview.id} {...interview} />
-        ))}
-        {/* <p>You haven&apos;t taken any interviews yet</p> */}
-
+        {
+        hasPastInterviews ? (
+          userInterviews?.map((interview) => (
+            <InterviewCard key={interview.id} {...interview} />
+          ))
+        ):(
+        <p>You haven&apos;t taken any interviews yet</p>
+        )
+      }
       </div>
     </section>
     <section className='flex flex-col gap-6 mt-8'>
       <h2>Take an Interview</h2>
       <div className="interviews-section">
-         {dummyInterviews.map((interview) => (
-          <InterviewCard key={interview.id} {...interview} />
-        ))}
+         {
+        hasUpcomingInterviews ? (
+          lastestInterviews?.map((interview) => (
+            <InterviewCard key={interview.id} {...interview} />
+          ))
+        ):(
         <p>There are no interviews available</p>
+        )
+      }
         <Button asChild className='btn-primary max-sm:w-full'>
           <Link href="/interview">Start an Interview</Link>
         </Button>
